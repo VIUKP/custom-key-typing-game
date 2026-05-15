@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Key Typing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <div id="timer">60</div>
+            <div id="score">Words: 0</div>
+        </header>
+        
+        <div id="display-area">
+            <div id="word-display">Loading...</div>
+        </div>
+
+        <div id="keyboard-visualizer">
+            <div id="layout-selector">
+                <button id="use-jp-btn" class="upload-btn active">Japanese Layout</button>
+                <button id="use-en-btn" class="upload-btn">English (US) Layout</button>
+            </div>
+            <div id="visualizer-settings">
+                <label>
+                    <input type="checkbox" id="show-swap-toggle" checked> Visual Swap (Show on Keys)
+                </label>
+                <label>
+                    <input type="checkbox" id="input-swap-toggle" checked> Input Swap (Apply to Typing)
+                </label>
+            </div>
+            <div class="keyboard-layout" id="kb-display">
+                <div class="kb-rows"></div>
+            </div>
+        </div>
+
+        <div id="controls">
+            <label for="key-upload" class="upload-btn">Upload Layout (key_swap.txt)</label>
+            <input type="file" id="key-upload" accept=".txt" style="display: none;">
+            <button id="download-btn" class="upload-btn">Download Layout</button>
+            <button id="toggle-config-btn" class="upload-btn">Edit Layout Directly</button>
+            <button id="reset-default-btn" class="upload-btn" style="background: #e06c75; color: white;">Reset to Default</button>
+        </div>
+
+        <div id="config-area" class="hidden">
+            <h3>Custom Key Mapping (Physical [Space] Target)</h3>
+            <textarea id="key-config-textarea" spellcheck="false" placeholder="w   c&#10;e   l&#10;..."></textarea>
+            <div class="config-buttons">
+                <button id="save-config-btn" class="upload-btn">Save & Apply</button>
+                <button id="close-config-btn" class="upload-btn">Close</button>
+            </div>
+        </div>
+
+        <div id="instructions">
+            Type the word above. Your custom layout is active!<br>
+            Press <strong>Esc</strong> to restart.
+        </div>
+
+        <div id="result-overlay" class="hidden">
+            <div class="result-box">
+                <h2>Game Over!</h2>
+                <div class="result-content">
+                    <div id="final-stats"></div>
+                    <button id="restart-btn">Restart (Esc)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+body {
+    margin: 0;
+    padding: 2rem 0; /* Add padding instead of fixed height center */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top to allow scrolling */
+    min-height: 100vh;
+}
+
+.game-container {
+    text-align: center;
+    max-width: 800px; /* Widened to accommodate keyboard better */
+    width: 90%;
+}
+
+.key.incorrect-highlight {
+    background: #e06c75;
+    color: white;
+    box-shadow: 0 0 10px #e06c75;
+    transform: scale(1.1);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+#timer {
+    color: #61dafb;
+    font-weight: bold;
+}
+
+#display-area {
+    background: #21252b;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    margin-bottom: 1rem;
+}
+
+#word-display {
+    font-size: 3rem;
+    letter-spacing: 0.2rem;
+    min-height: 4.5rem;
+}
+
+#keyboard-visualizer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #21252b;
+    border-radius: 8px;
+}
+
+#layout-selector {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#visualizer-settings {
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    color: #abb2bf;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+#visualizer-settings label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upload-btn.active {
+    background: #61dafb;
+    color: #282c34;
+    font-weight: bold;
+}
+
+.keyboard-layout h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.8rem;
+    color: #5c6370;
+    text-align: left;
+}
+
+.kb-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.kb-row {
+    display: flex;
+    gap: 4px;
+}
+
+.key {
+    width: 32px;
+    height: 32px;
+    background: #282c34;
+    border: 1px solid #3e4451;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #abb2bf;
+    transition: all 0.1s;
+}
+
+.key.highlight {
+    background: #61dafb;
+    color: #282c34;
+    font-weight: bold;
+    box-shadow: 0 0 10px #61dafb;
+    transform: scale(1.1);
+}
+
+.char {
+    position: relative;
+    color: #abb2bf;
+}
+
+.char.correct {
+    color: #98c379;
+}
+
+.char.incorrect {
+    color: #e06c75;
+    text-decoration: underline;
+}
+
+.char.current {
+    border-bottom: 3px solid #61dafb;
+}
+
+#instructions {
+    color: #5c6370;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#controls {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#config-area {
+    background: #21252b;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+#config-area h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #61dafb;
+}
+
+#key-config-textarea {
+    width: 100%;
+    height: 150px;
+    background: #282c34;
+    color: #abb2bf;
+    border: 1px solid #3e4451;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.config-buttons {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px; /* Fixed height for consistency */
+    padding: 0 1.5rem;
+    background: #3e4451;
+    color: #abb2bf;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+    font-family: inherit;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.upload-btn:hover {
+    background: #4b5263;
+    color: white;
+}
+
+#result-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#result-overlay.hidden {
+    display: none;
+}
+
+.result-box {
+    background: #282c34;
+    padding: 3rem;
+    border-radius: 12px;
+    border: 2px solid #61dafb;
+    min-width: 300px;
+}
+
+.result-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+#final-stats {
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+#final-stats div {
+    margin: 0.5rem 0;
+}
+
+button {
+    background: #61dafb;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #4fa8c7;
+}
