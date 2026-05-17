@@ -37,6 +37,7 @@ const keyConfigTextarea = document.getElementById('key-config-textarea');
 const saveConfigBtn = document.getElementById('save-config-btn');
 const closeConfigBtn = document.getElementById('close-config-btn');
 
+// Physical Layout Definitions (Standard symbols for each layout)
 const JP_LAYOUT = [
     ["1","2","3","4","5","6","7","8","9","0","-","^","\\"],
     ["q","w","e","r","t","y","u","i","o","p","@","["],
@@ -51,16 +52,29 @@ const EN_LAYOUT = [
     ["z","x","c","v","b","n","m",",",".","/"]
 ];
 
-const CODE_MAP = {
-    "Digit1": "1", "Digit2": "2", "Digit3": "3", "Digit4": "4", "Digit5": "5",
-    "Digit6": "6", "Digit7": "7", "Digit8": "8", "Digit9": "9", "Digit0": "0",
-    "Minus": "-", "Equal": "=", "IntlYen": "\\", "BracketLeft": "[", "BracketRight": "]",
-    "Backslash": "\\", "Semicolon": ";", "Quote": "'", "Comma": ",", "Period": ".", "Slash": "/",
-    "KeyA": "a", "KeyB": "b", "KeyC": "c", "KeyD": "d", "KeyE": "e", "KeyF": "f",
-    "KeyG": "g", "KeyH": "h", "KeyI": "i", "KeyJ": "j", "KeyK": "k", "KeyL": "l",
-    "KeyM": "m", "KeyN": "n", "KeyO": "o", "KeyP": "p", "KeyQ": "q", "KeyR": "r",
-    "KeyS": "s", "KeyT": "t", "KeyU": "u", "KeyV": "v", "KeyW": "w", "KeyX": "x",
-    "KeyY": "y", "KeyZ": "z", "Backquote": "`", "IntlRo": "\\"
+// Map browser e.code to physical character based on layout
+const JP_CODE_MAP = {
+    "Digit1":"1", "Digit2":"2", "Digit3":"3", "Digit4":"4", "Digit5":"5",
+    "Digit6":"6", "Digit7":"7", "Digit8":"8", "Digit9":"9", "Digit0":"0",
+    "Minus":"-", "Equal":"^", "IntlYen":"\\",
+    "KeyQ":"q", "KeyW":"w", "KeyE":"e", "KeyR":"r", "KeyT":"t", "KeyY":"y", "KeyU":"u", "KeyI":"i", "KeyO":"o", "KeyP":"p",
+    "BracketLeft":"@", "BracketRight":"[",
+    "KeyA":"a", "KeyS":"s", "KeyD":"d", "KeyF":"f", "KeyG":"g", "KeyH":"h", "KeyI":"i", "KeyJ":"j", "KeyK":"k", "KeyL":"l",
+    "Semicolon":";", "Quote":":", "Backslash":"]",
+    "KeyZ":"z", "KeyX":"x", "KeyC":"c", "KeyV":"v", "KeyB":"b", "KeyN":"n", "KeyM":"m",
+    "Comma":",", "Period":".", "Slash":"/", "IntlRo":"\\"
+};
+
+const EN_CODE_MAP = {
+    "Backquote":"`", "Digit1":"1", "Digit2":"2", "Digit3":"3", "Digit4":"4", "Digit5":"5",
+    "Digit6":"6", "Digit7":"7", "Digit8":"8", "Digit9":"9", "Digit0":"0",
+    "Minus":"-", "Equal":"=",
+    "KeyQ":"q", "KeyW":"w", "KeyE":"e", "KeyR":"r", "KeyT":"t", "KeyY":"y", "KeyU":"u", "KeyI":"i", "KeyO":"o", "KeyP":"p",
+    "BracketLeft":"[", "BracketRight":"]", "Backslash":"\\",
+    "KeyA":"a", "KeyS":"s", "KeyD":"d", "KeyF":"f", "KeyG":"g", "KeyH":"h", "KeyI":"i", "KeyJ":"j", "KeyK":"k", "KeyL":"l",
+    "Semicolon":";", "Quote":"'",
+    "KeyZ":"z", "KeyX":"x", "KeyC":"c", "KeyV":"v", "KeyB":"b", "KeyN":"n", "KeyM":"m",
+    "Comma":",", "Period":".", "Slash":"/"
 };
 
 // Load Data
@@ -76,7 +90,6 @@ async function init() {
             updateLayoutToggleUI();
         }
 
-        // Load swap toggle states
         const savedShowSwap = localStorage.getItem('typingGameShowSwap');
         if (savedShowSwap !== null) {
             showSwapToggle.checked = savedShowSwap === 'true';
@@ -230,11 +243,13 @@ function handleInput(e) {
     }
     if (timeLeft <= 0) return;
 
-    // 物理的なキー位置を特定 (e.code を使用)
-    const physicalPos = CODE_MAP[e.code] || e.key.toLowerCase();
+    // Determine physical key character based on current layout type and browser e.code
+    const currentCodeMap = currentLayoutType === 'JP' ? JP_CODE_MAP : EN_CODE_MAP;
+    const physicalPos = currentCodeMap[e.code] || e.key.toLowerCase();
     
-    // 入力の判定に使用する文字
-    // Input Swap が ON の場合はアプリ側でスワップ、OFF の場合は OS の入力をそのまま使用
+    // Determine typed character
+    // If Input Swap is ON, use our keyMap based on physical key
+    // If Input Swap is OFF, use the browser's e.key (which might already be swapped by OS)
     const typedChar = inputSwapToggle.checked ? (keyMap[physicalPos] || physicalPos) : e.key;
 
     if (typedChar.length !== 1) return;
